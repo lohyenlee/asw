@@ -103,6 +103,8 @@ int main (int argc, char** argv) {
   
   //======== Initialize simulators
   MetropolisSimulator  metropolisSimulator;
+  GibbsSimulator       gibbsSimulator;
+  GCASimulator         gcaSimulator;
   DSTSimulator         dstSimulator;
   ASWSimulator         aswSimulator;
 
@@ -127,11 +129,17 @@ int main (int argc, char** argv) {
         for (int s=0; s<xmax*ymax; ++s) {
           metropolisSimulator.step (spinArray, graph, coupling, field, T);
         }
+      } else if (algorithm=="GIB") {
+        for (int s=0; s<xmax*ymax; ++s) {
+          gibbsSimulator.step (spinArray, graph, coupling, field, T);
+        }
       } else if (algorithm=="DST") {
         dstSimulator.step (spinArray, graph, coupling, field, T);
       } else if (algorithm=="ASW") {
         aswSimulator.step (spinArray, graph, coupling, field, T);
         aswSimulator.rectify (spinArray, graph);
+      } else if (algorithm=="GCA") {
+        gcaSimulator.step (spinArray, graph, coupling, field, T);
       }
     }
     
@@ -154,10 +162,10 @@ int main (int argc, char** argv) {
     terminal.moveCursor (ymax+3,1); 
     cerr
     << CLEAR_LINE
-    << fmt(" <A>SW <D>ST <M>etropolis <F>aster <S>lower\n")
+    << fmt(" <A>SW <D>ST <M>etropolis <G>CA Gi<b>bs <F>aster <S>lower\n")
     << CLEAR_LINE
     << fmt(" <[]>Change T <,.>Change h <Space>=Run <Enter>=RepeatLastCommand <Q>uit\n")
-    << BOLD << CLEAR_LINE << " TYPE LETTER FOR COMMAND AND PRESS ENTER: " << "\x1b[0m ";
+    << BOLD << CLEAR_LINE << " TYPE COMMAND CHARACTER AND PRESS ENTER: " << "\x1b[0m ";
     
     std::getline (std::cin, sInput); 
     if (sInput!="") sCommand = sInput;
@@ -170,6 +178,8 @@ int main (int argc, char** argv) {
     else if (sCommand=="A") {algorithm="ASW";}
     else if (sCommand=="D") {algorithm="DST";}
     else if (sCommand=="M") {algorithm="MET";}
+    else if (sCommand=="G") {algorithm="GCA";}
+    else if (sCommand=="B") {algorithm="GIB";}
     else if (sCommand=="F") {speed*=10;if (speed>1000) speed=1000;}    
     else if (sCommand=="S") {speed/=10;if (speed<1) speed=1;} 
   };
