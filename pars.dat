@@ -1,0 +1,5 @@
+xmax        = 64
+ymax        = 64
+temperature = 2.27
+field       = 0.003
+steps       = 10000
