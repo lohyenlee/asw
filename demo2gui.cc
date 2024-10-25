@@ -168,17 +168,17 @@ int main (int argc, char** argv) {
     "Quit:        <|Escape|>  \n"
     "====================================================\n");
   
-  int xmax = 64;
-  int ymax = 48;  
-  //int zmax = 4;  
-  SquareLatticeGraph graph (xmax, ymax);
+  int xmax = 32;
+  int ymax = 32;
+  int zmax = 4;
+  //SquareLatticeGraph graph (xmax, ymax);
   //TriangularLatticeGraph graph (xmax, ymax);                    // Use this instead if desired
-  //CubicLatticeGraph graph (xmax, ymax, zmax, 1.0f, 1.0f, 4.0f); // Use this instead if desired
+  CubicLatticeGraph graph (xmax, ymax, zmax, 1.0f, 1.0f, 4.0f); // Use this instead if desired
   
   UniformVertexProperty field (0.00); 
   
-  UniformEdgeProperty coupling (1.00);
-  //AnisotropicEdgeProperty coupling {.1, 1, 10.};          // Use this instead if desired
+  //UniformEdgeProperty coupling (1.00);
+  AnisotropicEdgeProperty coupling {0, 0, 0, 0, 10., 10.};          // Use this instead if desired
   
   std::vector<IsingSpin> spinArray (graph.vertices());      // Ising spins
   //std::vector<ClockSpin<6>> spinArray (graph.vertices()); // 6-state clock model
